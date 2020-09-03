@@ -16,6 +16,9 @@ jobs:
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
+      - name: Setup MSBuild
+        uses: warrenbuckley/Setup-MSBuild@v1
+
       # - name: Dump GitHub context
       #   env:
       #     GITHUB_CONTEXT: ${{ toJson(runner) }}
@@ -44,7 +47,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          MSBuild FreeImage.2017.sln /p:Configuration=$BUILD_TYPE;Platform="x64;Win32"
+          msbuild FreeImage.2017.sln /p:Configuration=$BUILD_TYPE;Platform="Win32"
 
       - name: Checkout FreeType
         shell: bash
