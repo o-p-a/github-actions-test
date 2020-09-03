@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake --build . --config $BUILD_TYPE
+          MSBuild FreeImage.2017.sln /p:Configuration=$BUILD_TYPE;Platform="x64;Win32"
 
       - name: Checkout FreeType
         shell: bash
