@@ -42,7 +42,7 @@ jobs:
           7z x FreeImage.zip
 
       - name: Build FreeImage
-        shell: bash
+        shell: cmd
         working-directory: ${{runner.workspace}}/github-actions-test/external/FreeImage
         run: |
           mkdir build
