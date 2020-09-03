@@ -31,6 +31,22 @@ jobs:
       #   working-directory: ${{runner.workspace}}/github-actions-test
       #   run: ls -Rl
 
+      - name: Checkout FreeImage
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external
+        run: |
+          curl -f -L http://downloads.sourceforge.net/freeimage/FreeImage3180.zip -o FreeImage.zip
+          tar xf FreeImage.zip
+
+      - name: Build FreeImage
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external/FreeImage
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+          cmake --build . --config $BUILD_TYPE
+
       - name: Checkout FreeType
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external
