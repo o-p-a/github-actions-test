@@ -15,8 +15,8 @@ jobs:
 
       - name: Test
         shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: echo "${{runner.workspace}}/build"
+        working-directory: ${{runner.workspace}}
+        run: ls -Rl
 
       - name: Checkout FreeType
         shell: bash
