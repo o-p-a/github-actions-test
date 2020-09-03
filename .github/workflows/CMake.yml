@@ -43,7 +43,9 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external/freetype
         run: |
-          cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+          mkdir build
+          cd build
+          cmake ../ -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           cmake --build . --config $BUILD_TYPE
 
 
