@@ -19,34 +19,6 @@ jobs:
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-      # - name: Dump GitHub context
-      #   env:
-      #     GITHUB_CONTEXT: ${{ toJson(runner) }}
-      #   run: echo "$GITHUB_CONTEXT"
-
-      # - name: Test
-      #   shell: bash
-      #   working-directory: ${{runner.workspace}}
-      #   run: pwd; echo "${{runner.workspace}}  ${{github.repository.name}}"
-
-      # - name: Test
-      #   shell: bash
-      #   working-directory: ${{runner.workspace}}/github-actions-test
-      #   run: ls -Rl
-
-      - name: Checkout FreeImage
-        shell: bash
-        working-directory: ${{runner.workspace}}/github-actions-test/external
-        run: |
-          curl -f -L http://downloads.sourceforge.net/freeimage/FreeImage3180.zip -o FreeImage.zip
-          7z x FreeImage.zip
-
-      - name: Build FreeImage
-        shell: cmd
-        working-directory: ${{runner.workspace}}/github-actions-test/external/FreeImage
-        run: |
-          MSBuild FreeImage.2017.sln /p:Configuration=%BUILD_TYPE% /p:Platform="Win32"
-
       - name: Checkout FreeType
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external
@@ -64,12 +36,27 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           cmake --build . --config $BUILD_TYPE
 
+      - name: Checkout FreeImage
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external
+        run: |
+          curl -f -L http://downloads.sourceforge.net/freeimage/FreeImage3180.zip -o FreeImage.zip
+          7z x FreeImage.zip
+
+      - name: Build FreeImage
+        shell: cmd
+        working-directory: ${{runner.workspace}}/github-actions-test/external/FreeImage
+        run: |
+          MSBuild FreeImage.2017.sln /p:Configuration=%BUILD_TYPE% /p:Platform="Win32"
+
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
                 -DFREETYPE_INCLUDE_DIRS=${{runner.workspace}}/github-actions-test/external/freetype/include
                 -DFREETYPE_LIBRARY=${{runner.workspace}}/github-actions-test/external/freetype/build/Release/freetype.lib
+                -DFreeImage_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/FreeImage/Source
+                -DFreeImage_LIBRARY=${{runner.workspace}}/github-actions-test/external/FreeImage/Dist/x32/FreeImage.lib
 
 #cmake -g "Visual Studio 14 2015 x86" ..
 # -DEIGEN3_INCLUDE_DIR=%ES_LIB_DIR%\eigen
