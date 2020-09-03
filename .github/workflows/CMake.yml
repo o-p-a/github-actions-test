@@ -51,8 +51,8 @@ jobs:
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-                -DFREETYPE_INCLUDE_DIRS=${{runner.workspace}}/github-actions-test/external/freetype/include \
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+                -DFREETYPE_INCLUDE_DIRS=${{runner.workspace}}/github-actions-test/external/freetype/include
                 -DFREETYPE_LIBRARY=${{runner.workspace}}/github-actions-test/external/freetype/build/Release/freetype.lib
 
 #cmake -g "Visual Studio 14 2015 x86" ..
