@@ -15,24 +15,24 @@ jobs:
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$GITHUB_CONTEXT"
+      # - name: Dump GitHub context
+      #   env:
+      #     GITHUB_CONTEXT: ${{ toJson(runner) }}
+      #   run: echo "$GITHUB_CONTEXT"
+
+      # - name: Test
+      #   shell: bash
+      #   working-directory: ${{runner.workspace}}
+      #   run: pwd; echo "${{runner.workspace}}  ${{github.repository.name}}"
 
       - name: Test
         shell: bash
-        working-directory: ${{runner.workspace}}
-        run: pwd; echo "${{runner.workspace}}  ${{github.repository.name}}"
-
-      - name: Test
-        shell: bash
-        working-directory: ${{runner.workspace}}/${{github.repository.name}}
+        working-directory: ${{runner.workspace}}/github-actions-test
         run: ls -Rl
 
       - name: Checkout FreeType
         shell: bash
-        working-directory: ${{runner.workspace}}/${{github.repository.name}}/external
+        working-directory: ${{runner.workspace}}/github-actions-test/external
         run: curl https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2
 
       - name: Show Result
