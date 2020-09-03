@@ -2,7 +2,8 @@ name: CMake
 
 on: [push]
 
-#env:
+env:
+  BUILD_TYPE: Release
 
 jobs:
   build:
@@ -34,9 +35,18 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external
         run: |
-          curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2 -o freetype.tar.bz2
+          curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.bz2 -o freetype.tar.bz2
           tar xf freetype.tar.bz2
-          mv freetype-2.10.0 freetype
+          mv freetype-2.10.2 freetype
+
+      - name: Build FreeType
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external/freetype
+        run: |
+          cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+          cmake --build . --config $BUILD_TYPE
+
+
 
       - name: Show Result
         shell: bash
