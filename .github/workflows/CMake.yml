@@ -36,7 +36,7 @@ jobs:
         working-directory: ${{runner.workspace}}/github-actions-test/external
         run: |
           curl -f -L http://downloads.sourceforge.net/freeimage/FreeImage3180.zip -o FreeImage.zip
-          tar xf FreeImage.zip
+          7z x FreeImage.zip
 
       - name: Build FreeImage
         shell: bash
