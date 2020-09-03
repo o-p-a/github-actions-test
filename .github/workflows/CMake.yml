@@ -45,7 +45,7 @@ jobs:
         shell: cmd
         working-directory: ${{runner.workspace}}/github-actions-test/external/FreeImage
         run: |
-          MSBuild FreeImage.2017.sln /p:Configuration=$BUILD_TYPE /p:Platform="x64"
+          MSBuild FreeImage.2017.sln /p:Configuration=%BUILD_TYPE% /p:Platform="x86"
 
       - name: Checkout FreeType
         shell: bash
