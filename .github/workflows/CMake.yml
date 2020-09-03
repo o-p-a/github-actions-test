@@ -35,8 +35,8 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external
         run: |
-          curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.bz2 -o freetype.tar.bz2
-          tar xf freetype.tar.bz2
+          curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz -o freetype.tar.gz
+          tar xf freetype.tar.gz
           mv freetype-2.10.2 freetype
 
       - name: Build FreeType
