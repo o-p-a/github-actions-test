@@ -25,27 +25,30 @@ jobs:
       #   working-directory: ${{runner.workspace}}
       #   run: pwd; echo "${{runner.workspace}}  ${{github.repository.name}}"
 
-      - name: Test
-        shell: bash
-        working-directory: ${{runner.workspace}}/github-actions-test
-        run: ls -Rl
+      # - name: Test
+      #   shell: bash
+      #   working-directory: ${{runner.workspace}}/github-actions-test
+      #   run: ls -Rl
 
       - name: Checkout FreeType
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external
-        run: curl https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2
+        run: |
+          curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2 -o freetype.tar.bz2
+          tar xf freetype.tar.bz2
+          mv freetype-2.10.0 freetype
 
       - name: Show Result
         shell: bash
         working-directory: ${{runner.workspace}}
         run: ls -Rl
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      # # Runs a single command using the runners shell
+      # - name: Run a one-line script
+      #   run: echo Hello, world!
+      #
+      # # Runs a set of commands using the runners shell
+      # - name: Run a multi-line script
+      #   run: |
+      #     echo Add other actions to build,
+      #     echo test, and deploy your project.
