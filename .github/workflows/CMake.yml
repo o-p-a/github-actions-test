@@ -22,6 +22,11 @@ jobs:
 
       - name: Test
         shell: bash
+        working-directory: ${{runner.workspace}}
+        run: echo "${{runner.workspace}}/#{{github.repository.name}}"
+
+      - name: Test
+        shell: bash
         working-directory: ${{runner.workspace}}/#{{github.repository.name}}
         run: ls -Rl
 
