@@ -19,22 +19,20 @@ jobs:
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-      - name: Checkout SDL2
+      - name: Checkout curl
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external
         run: |
-          curl -f -L https://www.libsdl.org/release/SDL2-2.0.12.zip -o SDL2.zip
-          7z x SDL2.zip
-          mv SDL2-2.0.12 SDL2
+          curl -f -L https://curl.haxx.se/download/curl-7.72.0.tar.gz -o curl.tar.gz
+          tar xf curl.tar.gz
+          mv curl-* curl
 
-      - name: Build SDL2
-        shell: bash
-        working-directory: ${{runner.workspace}}/github-actions-test/external/SDL2
+      - name: Build curl
+        shell: cmd
+        working-directory: ${{runner.workspace}}/github-actions-test/external/curl
         run: |
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime ..
-          cmake --build . --config $BUILD_TYPE
+          cd winbuild
+          nmake /f Makefile.vc mode=dll DEBUG=no
 
 
 
@@ -44,7 +42,7 @@ jobs:
         run: |
           curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz -o freetype.tar.gz
           tar xf freetype.tar.gz
-          mv freetype-2.10.2 freetype
+          mv freetype-* freetype
 
       - name: Build FreeType
         shell: bash
@@ -68,6 +66,28 @@ jobs:
         run: |
           MSBuild FreeImage.2017.sln /p:Configuration=%BUILD_TYPE% /p:Platform="Win32"
 
+      - name: Checkout SDL2
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external
+        run: |
+          curl -f -L https://www.libsdl.org/release/SDL2-2.0.12.zip -o SDL2.zip
+          7z x SDL2.zip
+          mv SDL2-* SDL2
+
+      - name: Build SDL2
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external/SDL2
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime ..
+          cmake --build . --config $BUILD_TYPE
+
+      - name: Show Result
+        shell: bash
+        working-directory: ${{runner.workspace}}
+        run: ls -Rl
+
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
@@ -78,6 +98,8 @@ jobs:
                 -DFreeImage_LIBRARY=${{runner.workspace}}/github-actions-test/external/FreeImage/Dist/x32/FreeImage.lib
                 -DSDL2_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/SDL2/include
                 -DSDL2_LIBRARY=${{runner.workspace}}/github-actions-test/external/SDL2/build/Release/SDL2.lib;${{runner.workspace}}/github-actions-test/external/SDL2/build/Release/SDL2main.lib;Imm32.lib;version.lib
+                -DCURL_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/curl/include
+                -DCURL_LIBRARY=${{runner.workspace}}/github-actions-test/external/curl/builds/libcurl-vc14-x86-release-dll-ipv6-sspi-winssl/lib/libcurl.lib
 
 #cmake -g "Visual Studio 14 2015 x86" ..
 # -DEIGEN3_INCLUDE_DIR=%ES_LIB_DIR%\eigen
@@ -94,8 +116,3 @@ jobs:
 # -DVLC_INCLUDE_DIR=%ES_LIB_DIR%\libvlc-2.2.2\include
 # -DVLC_LIBRARIES=%ES_LIB_DIR%\libvlc-2.2.2\lib\msvc\libvlc.lib;%ES_LIB_DIR%\libvlc-2.2.2\lib\msvc\libvlccore.lib
 # -DVLC_VERSION=1.0.0
-
-      - name: Show Result
-        shell: bash
-        working-directory: ${{runner.workspace}}
-        run: ls -Rl
