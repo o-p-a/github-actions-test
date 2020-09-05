@@ -5,6 +5,7 @@ on: [push]
 env:
   BUILD_TYPE: Release
   Platform: x64
+  # ES_LIB_DIR: ${{runner.workspace}}/external
 
 jobs:
   build:
@@ -13,7 +14,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
       - uses: warrenbuckley/Setup-MSBuild@v1
       # - uses: ilammy/msvc-dev-cmd@v1
 
@@ -32,7 +32,7 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external/curl
         run: |
-          cmake -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE .
+          cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           cmake --build build --config $BUILD_TYPE
 
       - name: Checkout FreeType
@@ -47,7 +47,7 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external/freetype
         run: |
-          cmake -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE .
+          cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           cmake --build build --config $BUILD_TYPE
 
       - name: Checkout FreeImage
@@ -75,7 +75,7 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external/SDL2
         run: |
-          cmake -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime .
+          cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime
           cmake --build build --config $BUILD_TYPE
 
       - name: Show Result
@@ -86,7 +86,7 @@ jobs:
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+        run: cmake $GITHUB_WORKSPACE -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
                 -DFREETYPE_INCLUDE_DIRS=${{runner.workspace}}/github-actions-test/external/freetype/include
                 -DFREETYPE_LIBRARY=${{runner.workspace}}/github-actions-test/external/freetype/build/Release/freetype.lib
                 -DFreeImage_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/FreeImage/Source
@@ -94,7 +94,7 @@ jobs:
                 -DSDL2_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/SDL2/include
                 -DSDL2_LIBRARY=${{runner.workspace}}/github-actions-test/external/SDL2/build/Release/SDL2.lib;${{runner.workspace}}/github-actions-test/external/SDL2/build/Release/SDL2main.lib;Imm32.lib;version.lib
                 -DCURL_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/curl/include
-                -DCURL_LIBRARY=${{runner.workspace}}/github-actions-test/external/curl/builds/libcurl-vc-x64-release-dll-ipv6-sspi-schannel/lib/libcurl.lib
+                -DCURL_LIBRARY=${{runner.workspace}}/github-actions-test/external/curl/build/lib/Release/libcurl_imp.lib
 
 #cmake -g "Visual Studio 14 2015 x86" ..
 # -DEIGEN3_INCLUDE_DIR=%ES_LIB_DIR%\eigen
