@@ -35,33 +35,33 @@ jobs:
           cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           cmake --build build --config $BUILD_TYPE
 
-      - name: Checkout FreeType
-        shell: bash
-        working-directory: ${{runner.workspace}}/github-actions-test/external
-        run: |
-          curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz -o freetype.tar.gz
-          tar xf freetype.tar.gz
-          mv freetype-* freetype
-
-      - name: Build FreeType
-        shell: bash
-        working-directory: ${{runner.workspace}}/github-actions-test/external/freetype
-        run: |
-          cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-          cmake --build build --config $BUILD_TYPE
-
-      - name: Checkout FreeImage
-        shell: bash
-        working-directory: ${{runner.workspace}}/github-actions-test/external
-        run: |
-          curl -f -L http://downloads.sourceforge.net/freeimage/FreeImage3180.zip -o FreeImage.zip
-          7z x FreeImage.zip
-
-      - name: Build FreeImage
-        shell: cmd
-        working-directory: ${{runner.workspace}}/github-actions-test/external/FreeImage
-        run: |
-          MSBuild FreeImage.2017.sln /p:Configuration=%BUILD_TYPE% /p:Platform=%Platform%
+      # - name: Checkout FreeType
+      #   shell: bash
+      #   working-directory: ${{runner.workspace}}/github-actions-test/external
+      #   run: |
+      #     curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz -o freetype.tar.gz
+      #     tar xf freetype.tar.gz
+      #     mv freetype-* freetype
+      #
+      # - name: Build FreeType
+      #   shell: bash
+      #   working-directory: ${{runner.workspace}}/github-actions-test/external/freetype
+      #   run: |
+      #     cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      #     cmake --build build --config $BUILD_TYPE
+      #
+      # - name: Checkout FreeImage
+      #   shell: bash
+      #   working-directory: ${{runner.workspace}}/github-actions-test/external
+      #   run: |
+      #     curl -f -L http://downloads.sourceforge.net/freeimage/FreeImage3180.zip -o FreeImage.zip
+      #     7z x FreeImage.zip
+      #
+      # - name: Build FreeImage
+      #   shell: cmd
+      #   working-directory: ${{runner.workspace}}/github-actions-test/external/FreeImage
+      #   run: |
+      #     MSBuild FreeImage.2017.sln /p:Configuration=%BUILD_TYPE% /p:Platform=%Platform%
 
       - name: Checkout SDL2
         shell: bash
