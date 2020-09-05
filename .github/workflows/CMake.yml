@@ -108,6 +108,7 @@ jobs:
                 -DVLC_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/libvlc-sdk/include
                 -DVLC_LIBRARIES=${{runner.workspace}}/github-actions-test/external/libvlc-sdk/lib/msvc/libvlc.lib;${{runner.workspace}}/github-actions-test/external/libvlc-sdk/lib/msvc/libvlccore.lib
                 -DVLC_VERSION=2.2.2
+                -DVLC_VERSIONX=2.2.2
 
 
                 # -DFreetype_ROOT="$PROGRAMFILES/freetype"
