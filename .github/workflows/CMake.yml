@@ -93,7 +93,7 @@ jobs:
                 -DFreeImage_LIBRARY=${{runner.workspace}}/github-actions-test/external/FreeImage/Dist/x32/FreeImage.lib
                 -DSDL2_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/SDL2/include
                 -DSDL2_LIBRARY=${{runner.workspace}}/github-actions-test/external/SDL2/build/Release/SDL2.lib;${{runner.workspace}}/github-actions-test/external/SDL2/build/Release/SDL2main.lib;Imm32.lib;version.lib
-                -DCURL_ROOT=${{runner.workspace}}/github-actions-test/external/curl/build
+                -DCMAKE_PROGRAM_PATH=${{runner.workspace}}/github-actions-test/external/curl/build
                 -DCURL_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/curl/include
                 -DCURL_LIBRARY=${{runner.workspace}}/github-actions-test/external/curl/build/lib/Release/libcurl_imp.lib
 
