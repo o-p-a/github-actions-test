@@ -11,8 +11,8 @@ LIST(APPEND CMAKE_MODULE_PATH
 
 #finding necessary packages
 #-------------------------------------------------------------------------------
-#find_package(Freetype REQUIRED)
-#find_package(FreeImage REQUIRED)
+find_package(Freetype REQUIRED)
+find_package(FreeImage REQUIRED)
 find_package(CURL REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2MIXER REQUIRED)
