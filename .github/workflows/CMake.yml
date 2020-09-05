@@ -4,6 +4,7 @@ on: [push]
 
 env:
   BUILD_TYPE: Release
+  Platform: x64
 
 jobs:
   build:
@@ -31,15 +32,8 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external/curl
         run: |
-          cmake -B build -DCMAKE_BUILD_TYPE=$BUILD_TYPE .
+          cmake -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE .
           cmake --build build --config $BUILD_TYPE
-        # shell: cmd
-        # working-directory: ${{runner.workspace}}/github-actions-test/external/curl
-        # run: |
-        #   cd winbuild
-        #   nmake /f Makefile.vc mode=dll DEBUG=no
-
-
 
       - name: Checkout FreeType
         shell: bash
@@ -53,10 +47,8 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external/freetype
         run: |
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ..
-          cmake --build . --config $BUILD_TYPE
+          cmake -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE .
+          cmake --build build --config $BUILD_TYPE
 
       - name: Checkout FreeImage
         shell: bash
@@ -83,10 +75,8 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external/SDL2
         run: |
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime ..
-          cmake --build . --config $BUILD_TYPE
+          cmake -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime .
+          cmake --build build --config $BUILD_TYPE
 
       - name: Show Result
         shell: bash
