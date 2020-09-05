@@ -30,6 +30,8 @@ endif(NOT WIN32)
 
 # TODO add argument support to pass version on find_package
 include(MacroEnsureVersion)
+message(STATUS "1.0.0")
+message(STATUS ${VLC_VERSION})
 macro_ensure_version(1.0.0 ${VLC_VERSION} VLC_VERSION_OK)
 if(VLC_VERSION_OK)
   set(VLC_FOUND TRUE)
