@@ -84,17 +84,22 @@ jobs:
       - name: Show Result
         shell: bash
         working-directory: ${{runner.workspace}}
-        run: ls -Rl
+        run: |
+            printenv
+            ls -Rl
 
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: cmake $GITHUB_WORKSPACE -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-                -DFREETYPE_ROOT="$PROGRAMFILES/freetype"
+                -DFREETYPE_INCLUDE_DIRS="$PROGRAMFILES"/freetype/include
+                -DFREETYPE_LIBRARY="$PROGRAMFILES"/freetype/lib/freetype.lib
                 -DFreeImage_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/FreeImage/Source
                 -DFreeImage_LIBRARY=${{runner.workspace}}/github-actions-test/external/FreeImage/Dist/x32/FreeImage.lib
+                -DSDL2_ROOT="$PROGRAMFILES"/SDL2
 
 
+                # -DFreetype_ROOT="$PROGRAMFILES/freetype"
                 # -DFREETYPE_INCLUDE_DIRS=${{runner.workspace}}/github-actions-test/external/freetype/include
                 # -DFREETYPE_LIBRARY=${{runner.workspace}}/github-actions-test/external/freetype/build/Release/freetype.lib
                 # -DFreeImage_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/FreeImage/Source
