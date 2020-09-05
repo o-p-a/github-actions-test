@@ -90,6 +90,7 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: cmake $GITHUB_WORKSPACE -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+                -DFREETYPE_ROOT=$PROGRAMFILES/freetype
                 -DFreeImage_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/FreeImage/Source
                 -DFreeImage_LIBRARY=${{runner.workspace}}/github-actions-test/external/FreeImage/Dist/x32/FreeImage.lib
 
