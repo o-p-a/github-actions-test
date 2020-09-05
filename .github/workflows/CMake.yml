@@ -96,7 +96,8 @@ jobs:
                 -DFREETYPE_LIBRARY="$PROGRAMFILES"/freetype/lib/freetype.lib
                 -DFreeImage_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/FreeImage/Source
                 -DFreeImage_LIBRARY=${{runner.workspace}}/github-actions-test/external/FreeImage/Dist/x32/FreeImage.lib
-                -DSDL2_ROOT="$PROGRAMFILES"/SDL2
+                -DSDL2_INCLUDE_DIR="$PROGRAMFILES"/SDL2/include
+                -DSDL2_LIBRARY="$PROGRAMFILES"/SDL2/lib/SDL2.lib;"$PROGRAMFILES"/SDL2/lib/SDL2main.lib;Imm32.lib;version.lib
 
 
                 # -DFreetype_ROOT="$PROGRAMFILES/freetype"
