@@ -28,11 +28,16 @@ jobs:
           mv curl-* curl
 
       - name: Build curl
-        shell: cmd
+        shell: bash
         working-directory: ${{runner.workspace}}/github-actions-test/external/curl
         run: |
-          cd winbuild
-          nmake /f Makefile.vc mode=dll DEBUG=no
+          cmake -B build -DCMAKE_BUILD_TYPE=$BUILD_TYPE .
+          cmake -B build --build . --config $BUILD_TYPE
+        # shell: cmd
+        # working-directory: ${{runner.workspace}}/github-actions-test/external/curl
+        # run: |
+        #   cd winbuild
+        #   nmake /f Makefile.vc mode=dll DEBUG=no
 
 
 
