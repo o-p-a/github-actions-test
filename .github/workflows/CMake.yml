@@ -34,6 +34,7 @@ jobs:
         run: |
           cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           cmake --build build --config $BUILD_TYPE
+          cmake --install build --config $BUILD_TYPE
 
       # - name: Checkout FreeType
       #   shell: bash
@@ -63,20 +64,21 @@ jobs:
       #   run: |
       #     MSBuild FreeImage.2017.sln /p:Configuration=%BUILD_TYPE% /p:Platform=%Platform%
 
-      - name: Checkout SDL2
-        shell: bash
-        working-directory: ${{runner.workspace}}/github-actions-test/external
-        run: |
-          curl -f -L https://www.libsdl.org/release/SDL2-2.0.12.zip -o SDL2.zip
-          7z x SDL2.zip
-          mv SDL2-* SDL2
-
-      - name: Build SDL2
-        shell: bash
-        working-directory: ${{runner.workspace}}/github-actions-test/external/SDL2
-        run: |
-          cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime
-          cmake --build build --config $BUILD_TYPE
+      # - name: Checkout SDL2
+      #   shell: bash
+      #   working-directory: ${{runner.workspace}}/github-actions-test/external
+      #   run: |
+      #     curl -f -L https://www.libsdl.org/release/SDL2-2.0.12.zip -o SDL2.zip
+      #     7z x SDL2.zip
+      #     mv SDL2-* SDL2
+      #
+      # - name: Build SDL2
+      #   shell: bash
+      #   working-directory: ${{runner.workspace}}/github-actions-test/external/SDL2
+      #   run: |
+      #     cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime
+      #     cmake --build build --config $BUILD_TYPE
+      #     cmake --install build --config $BUILD_TYPE
 
       - name: Show Result
         shell: bash
@@ -93,7 +95,6 @@ jobs:
                 -DFreeImage_LIBRARY=${{runner.workspace}}/github-actions-test/external/FreeImage/Dist/x32/FreeImage.lib
                 -DSDL2_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/SDL2/include
                 -DSDL2_LIBRARY=${{runner.workspace}}/github-actions-test/external/SDL2/build/Release/SDL2.lib;${{runner.workspace}}/github-actions-test/external/SDL2/build/Release/SDL2main.lib;Imm32.lib;version.lib
-                -DCMAKE_PROGRAM_PATH=${{runner.workspace}}/github-actions-test/external/curl/build
                 -DCURL_INCLUDE_DIR=${{runner.workspace}}/github-actions-test/external/curl/include
                 -DCURL_LIBRARY=${{runner.workspace}}/github-actions-test/external/curl/build/lib/Release/libcurl_imp.lib
 
