@@ -20,66 +20,66 @@ jobs:
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-      # - name: Checkout FreeType
-      #   shell: bash
-      #   working-directory: ${{runner.workspace}}/github-actions-test/external
-      #   run: |
-      #     curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz -o freetype.tar.gz
-      #     tar xf freetype.tar.gz
-      #     mv freetype-* freetype
-      #
-      # - name: Build FreeType
-      #   shell: bash
-      #   working-directory: ${{runner.workspace}}/github-actions-test/external/freetype
-      #   run: |
-      #     cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-      #     cmake --build build --config $BUILD_TYPE
-      #     cmake --install build --config $BUILD_TYPE
-      #
-      # - name: Checkout FreeImage
-      #   shell: bash
-      #   working-directory: ${{runner.workspace}}/github-actions-test/external
-      #   run: |
-      #     curl -f -L http://downloads.sourceforge.net/freeimage/FreeImage3180.zip -o FreeImage.zip
-      #     7z x FreeImage.zip
-      #
-      # - name: Build FreeImage
-      #   shell: cmd
-      #   working-directory: ${{runner.workspace}}/github-actions-test/external/FreeImage
-      #   run: |
-      #     MSBuild FreeImage.2017.sln /p:Configuration=%BUILD_TYPE% /p:Platform=%Platform%
-      #
-      # - name: Checkout SDL2
-      #   shell: bash
-      #   working-directory: ${{runner.workspace}}/github-actions-test/external
-      #   run: |
-      #     curl -f -L https://www.libsdl.org/release/SDL2-2.0.12.zip -o SDL2.zip
-      #     7z x SDL2.zip
-      #     mv SDL2-* SDL2
-      #
-      # - name: Build SDL2
-      #   shell: bash
-      #   working-directory: ${{runner.workspace}}/github-actions-test/external/SDL2
-      #   run: |
-      #     cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime
-      #     cmake --build build --config $BUILD_TYPE
-      #     cmake --install build --config $BUILD_TYPE
-      #
-      # - name: Checkout curl
-      #   shell: bash
-      #   working-directory: ${{runner.workspace}}/github-actions-test/external
-      #   run: |
-      #     curl -f -L https://curl.haxx.se/download/curl-7.72.0.tar.gz -o curl.tar.gz
-      #     tar xf curl.tar.gz
-      #     mv curl-* curl
-      #
-      # - name: Build curl
-      #   shell: bash
-      #   working-directory: ${{runner.workspace}}/github-actions-test/external/curl
-      #   run: |
-      #     cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-      #     cmake --build build --config $BUILD_TYPE
-      #     cmake --install build --config $BUILD_TYPE
+      - name: Checkout FreeType
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external
+        run: |
+          curl -f -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz -o freetype.tar.gz
+          tar xf freetype.tar.gz
+          mv freetype-* freetype
+
+      - name: Build FreeType
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external/freetype
+        run: |
+          cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+          cmake --build build --config $BUILD_TYPE
+          cmake --install build --config $BUILD_TYPE
+
+      - name: Checkout FreeImage
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external
+        run: |
+          curl -f -L http://downloads.sourceforge.net/freeimage/FreeImage3180.zip -o FreeImage.zip
+          7z x FreeImage.zip
+
+      - name: Build FreeImage
+        shell: cmd
+        working-directory: ${{runner.workspace}}/github-actions-test/external/FreeImage
+        run: |
+          MSBuild FreeImage.2017.sln /p:Configuration=%BUILD_TYPE% /p:Platform=%Platform%
+
+      - name: Checkout SDL2
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external
+        run: |
+          curl -f -L https://www.libsdl.org/release/SDL2-2.0.12.zip -o SDL2.zip
+          7z x SDL2.zip
+          mv SDL2-* SDL2
+
+      - name: Build SDL2
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external/SDL2
+        run: |
+          cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DEXTRA_LIBS=vcruntime
+          cmake --build build --config $BUILD_TYPE
+          cmake --install build --config $BUILD_TYPE
+
+      - name: Checkout curl
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external
+        run: |
+          curl -f -L https://curl.haxx.se/download/curl-7.72.0.tar.gz -o curl.tar.gz
+          tar xf curl.tar.gz
+          mv curl-* curl
+
+      - name: Build curl
+        shell: bash
+        working-directory: ${{runner.workspace}}/github-actions-test/external/curl
+        run: |
+          cmake . -B build -A $Platform -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+          cmake --build build --config $BUILD_TYPE
+          cmake --install build --config $BUILD_TYPE
 
       - name: Checkout VLC
         shell: bash
