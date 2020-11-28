@@ -13,16 +13,23 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
+
       - uses: microsoft/setup-msbuild@v1.0.2
-      - run: |
+
+      - name: setup directories
+        run: |
              mkdir nuget
+
       - working-directory: nuget
         run: nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
+
       - run: vcpkg install curl:x86-windows-static-md
-      - run: freeimage:x86-windows-static-md
-      - run: freetype:x86-windows-static-md
-      - run: rapidjson:x86-windows-static-md
-      - run: sdl2:x86-windows-static-md
+      - run: vcpkg install freeimage:x86-windows-static-md
+      - run: vcpkg install freetype:x86-windows-static-md
+      - run: vcpkg install rapidjson:x86-windows-static-md
+      - run: vcpkg install sdl2:x86-windows-static-md
+
       - run: cmake -E make_directory ${{runner.workspace}}/build
+
       - run: tree /f /a
       - run: tree /f /a c:/vcpkg/installed
