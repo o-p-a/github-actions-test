@@ -3,6 +3,8 @@ on: [push]
 env:
   BUILD_TYPE: Release
   Platform: Win32
+  NUGET: ${{runner.workspace}}/nuget
+  VCPKG: c:/vcpkg/installed/x86-windows-static-md
 
 defaults:
   run:
@@ -12,12 +14,15 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+#      - uses: actions/checkout@v2
+      - working-directory: ..
+        run: git clone https://github.com/o-p-a/EmulationStation.git
 
       - uses: microsoft/setup-msbuild@v1.0.2
 
       - name: setup directories
         run: |
+             mkdir build
              mkdir nuget
 
       - working-directory: nuget
@@ -29,7 +34,21 @@ jobs:
       - run: vcpkg install rapidjson:x86-windows-static-md
       - run: vcpkg install sdl2:x86-windows-static-md
 
-      - run: cmake -E make_directory ${{runner.workspace}}/build
+      - name: cmake
+        run: cmake .
+               -B build
+               -A %Platform%
+               -DRAPIDJSON_INCLUDE_DIRS=%VCPKG%/include
+               -DCURL_INCLUDE_DIR=%VCPKG%/include
+               -DSDL2_INCLUDE_DIR=%VCPKG%/include/SDL2
+               -DVLC_INCLUDE_DIR=%NUGET%/VideoLAN.LibVLC.Windows/build/x86/include
+               -DCURL_LIBRARY=%VCPKG%/lib/*.lib;Wldap32.Lib;Crypt32.Lib;Imm32.Lib;Version.lib;Setupapi.lib
+               -DSDL2_LIBRARY=%VCPKG%/lib/manual-link/SDL2main.lib
+               -DVLC_LIBRARIES=%NUGET%/VideoLAN.LibVLC.Windows/build/x86/libvlc*.lib
+               -DVLC_VERSION=3.0.11
+               -DCMAKE_EXE_LINKER_FLAGS=/SAFESEH:NO
+
+      - run: cmake --build build --config %BUILD_TYPE%
 
       - run: tree /f /a
       - run: tree /f /a c:/vcpkg/installed
