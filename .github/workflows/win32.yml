@@ -1,0 +1,19 @@
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+  Platform: Win32
+
+defaults:
+  run:
+    shell: cmd
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: warrenbuckley/Setup-MSBuild@v1
+      - run: cmake -E make_directory ${{runner.workspace}}/build
+      - run: nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
+      - run: vcpkg install curl:x86-windows-static-md freeimage:x86-windows-static-md freetype:x86-windows-static-md rapidjson:x86-windows-static-md sdl2:x86-windows-static-md
