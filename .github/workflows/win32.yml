@@ -1,18 +1,20 @@
 on: [push]
 
-env:
-  BUILD_TYPE: Release
-  Platform: Win32
-  NUGET: ${{runner.workspace}}/nuget
-  VCPKG: c:/vcpkg/installed/x86-windows-static-md
-
-defaults:
-  run:
-    shell: cmd
-
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on:
+      windows-latest
+
+    env:
+      BUILD_TYPE: Release
+      Platform: Win32
+      NUGET: ${{runner.workspace}}/nuget
+      VCPKG: c:/vcpkg/installed/x86-windows-static-md
+
+    defaults:
+      run:
+        shell: cmd
+
     steps:
 #      - uses: actions/checkout@v2
       - working-directory: ..
