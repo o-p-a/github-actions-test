@@ -8,7 +8,7 @@ jobs:
     env:
       BUILD_TYPE: Release
       Platform: Win32
-      NUGET: ${{runner.workspace}}/nuget
+      NUGET: ${{ github.workspace }}/nuget
       VCPKG: c:/vcpkg/installed/x86-windows-static-md
 
     defaults:
