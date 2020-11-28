@@ -7,7 +7,6 @@ env:
 defaults:
   run:
     shell: cmd
-    working-directory: stage
 
 jobs:
   build:
@@ -15,7 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: microsoft/setup-msbuild@v1.0.2
-      - run: nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
+      - run: |
+             mkdir nuget
+      - working-directory: nuget
+        run: nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
       - run: vcpkg install curl:x86-windows-static-md
       - run: freeimage:x86-windows-static-md
       - run: freetype:x86-windows-static-md
