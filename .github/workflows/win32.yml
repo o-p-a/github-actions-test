@@ -34,7 +34,7 @@ jobs:
           mkdir nuget
 
 #      - uses: actions/checkout@v2
-      - run: git clone https://github.com/o-p-a/EmulationStation.git ${{github.workspace}}
+      - run: git clone --recursive https://github.com/o-p-a/EmulationStation.git ${{github.workspace}}
 
       - uses: microsoft/setup-msbuild@v1.0.2
 
