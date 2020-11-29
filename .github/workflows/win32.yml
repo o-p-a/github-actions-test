@@ -42,10 +42,9 @@ jobs:
         run:
           7z a emulationstation-source.zip ${{github.workspace}}
 
-      - working-directory: ${{runner.workspace}}
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
-          path: emulationstation-source.zip
+          path: ${{runner.workspace}}/emulationstation-source.zip
 
       - working-directory: ${{runner.workspace}}/nuget
         run: |
