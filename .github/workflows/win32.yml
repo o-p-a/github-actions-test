@@ -10,7 +10,7 @@ jobs:
     env:
       BUILD_TYPE: Release
       Platform: Win32
-      NUGET: ${{runner.workspace}}/nuget
+#      NUGET: ${{runner.workspace}}/nuget
       VCPKG: "%VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md"
 
     defaults:
@@ -49,10 +49,10 @@ jobs:
                -DRAPIDJSON_INCLUDE_DIRS=%VCPKG%/include
                -DCURL_INCLUDE_DIR=%VCPKG%/include
                -DSDL2_INCLUDE_DIR=%VCPKG%/include/SDL2
-               -DVLC_INCLUDE_DIR=%NUGET%/VideoLAN.LibVLC.Windows/build/x86/include
+               -DVLC_INCLUDE_DIR=${{runner.workspace}}/nuget/VideoLAN.LibVLC.Windows/build/x86/include
                -DCURL_LIBRARY=%VCPKG%/lib/*.lib;Wldap32.Lib;Crypt32.Lib;Imm32.Lib;Version.lib;Setupapi.lib
                -DSDL2_LIBRARY=%VCPKG%/lib/manual-link/SDL2main.lib
-               -DVLC_LIBRARIES=%NUGET%/VideoLAN.LibVLC.Windows/build/x86/libvlc*.lib
+               -DVLC_LIBRARIES=${{runner.workspace}}/nuget/VideoLAN.LibVLC.Windows/build/x86/libvlc*.lib
                -DVLC_VERSION=3.0.11
                -DCMAKE_EXE_LINKER_FLAGS=/SAFESEH:NO
 
