@@ -42,6 +42,12 @@ jobs:
 
       - working-directory: ${{runner.workspace}}/nuget
         run: nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
+        run: |
+          cd /d %NUGET%/VideoLAN.LibVLC.Windows/build/x86/include/vlc
+          copy libvlc_media.h libvlc_media.h.dist
+          echo typedef signed int ssize_t;>$ssize_t.h
+          copy /y $ssize_t.h + libvlc_media.h.dist libvlc_media.h
+          del $ssize_t.h
 
       - run: vcpkg install curl:x86-windows-static-md
       - run: vcpkg install freeimage:x86-windows-static-md
