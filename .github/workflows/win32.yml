@@ -20,20 +20,22 @@ jobs:
         run: |
           echo NUGET=${{runner.workspace}}/nuget>>%GITHUB_ENV%
           echo VCPKG=%VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md>>%GITHUB_ENV%
+          echo FREETYPE_DIR=%VCPKG%>>%GITHUB_ENV%
+          echo FREEIMAGE_HOME=%VCPKG%>>%GITHUB_ENV%
 
-      - name: printenv
-        run: set
-
-#      - uses: actions/checkout@v2
-      - run: git clone https://github.com/o-p-a/EmulationStation.git ${{github.workspace}}
-
-      - uses: microsoft/setup-msbuild@v1.0.2
+      # - name: printenv
+      #   run: set
 
       - name: setup directories
         working-directory: ${{runner.workspace}}
         run: |
           mkdir build
           mkdir nuget
+
+#      - uses: actions/checkout@v2
+      - run: git clone https://github.com/o-p-a/EmulationStation.git ${{github.workspace}}
+
+      - uses: microsoft/setup-msbuild@v1.0.2
 
       - working-directory: ${{runner.workspace}}/nuget
         run: nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
@@ -47,7 +49,7 @@ jobs:
       - run: tree /f /a ${{runner.workspace}}
       - run: tree /f /a c:/vcpkg/installed
 
-      - name: cmake
+      - name: Run cmake
         working-directory: ${{runner.workspace}}
         run: cmake ${{github.workspace}}
           -B build
@@ -64,3 +66,5 @@ jobs:
 
       - working-directory: ${{runner.workspace}}
         run: cmake --build build --config %BUILD_TYPE%
+
+      - run: tree /f /a ${{github.workspace}}/Release
