@@ -1,23 +1,54 @@
+name: printenv
+
 on: [push]
 
 jobs:
   contexts:
     runs-on: windows-latest
-    # env:
-    #   context-github: ${{toJson(github)}}
-    #   context-env: ${{toJson(env)}}
-    #   job
-    #   steps
-    #   runner
-    #   secrets
-    #   strategy
-    #   matrix
-    #   needs
     steps:
-    - name: context/github
+    - name: github
+      shell: bash
+      env: { jsonstr: ${{toJson(github)}} }
+      run: echo "$jsonstr"
+    - name: env
       shell: bash
       env:
-        jsonstr: ${{toJson(github)}}
+        jsonstr: ${{toJson(env)}}
+      run: echo "$jsonstr"
+    - name: job
+      shell: bash
+      env:
+        jsonstr: ${{toJson(job)}}
+      run: echo "$jsonstr"
+    - name: steps
+      shell: bash
+      env:
+        jsonstr: ${{toJson(steps)}}
+      run: echo "$jsonstr"
+    - name: runner
+      shell: bash
+      env:
+        jsonstr: ${{toJson(runner)}}
+      run: echo "$jsonstr"
+    - name: secrets
+      shell: bash
+      env:
+        jsonstr: ${{toJson(secrets)}}
+      run: echo "$jsonstr"
+    - name: strategy
+      shell: bash
+      env:
+        jsonstr: ${{toJson(strategy)}}
+      run: echo "$jsonstr"
+    - name: matrix
+      shell: bash
+      env:
+        jsonstr: ${{toJson(matrix)}}
+      run: echo "$jsonstr"
+    - name: needs
+      shell: bash
+      env:
+        jsonstr: ${{toJson(needs)}}
       run: echo "$jsonstr"
 
   windows-latest:
