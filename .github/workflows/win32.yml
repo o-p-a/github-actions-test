@@ -70,9 +70,9 @@ jobs:
 
       - working-directory: ${{github.workspace}}/Release
         run: |
-          copy /y "${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlc.dll" .
-          copy /y "${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlccore.dll" .
-          xcopy /E /I "${{github.workspace}}/resources" resources
+          cp ${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlc.dll .
+          cp ${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlccore.dll .
+          cp -r ${{github.workspace}}/resources resources
           7z a ${{runner.workspace}}/EmulationStation.zip emulationstation.exe *.dll resources
 
       - run: tree /f /a ${{github.workspace}}/Release
