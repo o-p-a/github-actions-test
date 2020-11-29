@@ -18,13 +18,14 @@ jobs:
     steps:
       - name: setenv
         run: |
+          set VCPKG=%VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md
           echo NUGET=${{runner.workspace}}/nuget>>%GITHUB_ENV%
-          echo VCPKG=%VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md>>%GITHUB_ENV%
+          echo VCPKG=%VCPKG%>>%GITHUB_ENV%
           echo FREETYPE_DIR=%VCPKG%>>%GITHUB_ENV%
           echo FREEIMAGE_HOME=%VCPKG%>>%GITHUB_ENV%
 
-      # - name: printenv
-      #   run: set
+      - name: printenv
+        run: set
 
       - name: setup directories
         working-directory: ${{runner.workspace}}
