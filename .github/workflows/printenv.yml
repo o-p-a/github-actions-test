@@ -55,6 +55,12 @@ jobs:
   windows-latest:
     runs-on: windows-latest
     steps:
+    - name: setenv
+      shell: cmd
+      run: |
+        setx AAAA AA AA
+        setx BBBB BB BB
+        setx CCCC CC CC
     - name: printenv
       shell: cmd
       run: set
