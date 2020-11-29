@@ -12,7 +12,8 @@ jobs:
 
       context-github:
         runs-on: windows-latest
-        env: jsonstr: ${{ toJson(github) }}
+        env:
+          jsonstr: ${{ toJson(github) }}
         steps:
         - name: printenv
           shell: bash
@@ -20,7 +21,8 @@ jobs:
 
       context-job:
         runs-on: windows-latest
-        env: jsonstr: ${{ toJson(job) }}
+        env:
+          jsonstr: ${{ toJson(job) }}
         steps:
         - name: printenv
           shell: bash
@@ -28,7 +30,8 @@ jobs:
 
       context-steps:
         runs-on: windows-latest
-        env: jsonstr: ${{ toJson(steps) }}
+        env:
+          jsonstr: ${{ toJson(steps) }}
         steps:
         - name: printenv
           shell: bash
@@ -36,7 +39,8 @@ jobs:
 
       context-runner:
         runs-on: windows-latest
-        env: jsonstr: ${{ toJson(runner) }}
+        env:
+          jsonstr: ${{ toJson(runner) }}
         steps:
         - name: printenv
           shell: bash
@@ -44,7 +48,8 @@ jobs:
 
       context-strategy:
         runs-on: windows-latest
-        env: jsonstr: ${{ toJson(strategy) }}
+        env:
+          jsonstr: ${{ toJson(strategy) }}
         steps:
         - name: printenv
           shell: bash
@@ -52,7 +57,8 @@ jobs:
 
       context-matrix:
         runs-on: windows-latest
-        env: jsonstr: ${{ toJson(matrix) }}
+        env:
+          jsonstr: ${{ toJson(matrix) }}
         steps:
         - name: printenv
           shell: bash
