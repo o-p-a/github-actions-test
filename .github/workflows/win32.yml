@@ -10,8 +10,8 @@ jobs:
     env:
       BUILD_TYPE: Release
       Platform: Win32
-      NUGET: ${{ github.workspace }}/nuget
-      VCPKG: c:/vcpkg/installed/x86-windows-static-md
+      NUGET: ${{runner.workspace}}/nuget
+      VCPKG: %VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md
 
     defaults:
       run:
@@ -19,17 +19,17 @@ jobs:
 
     steps:
 #      - uses: actions/checkout@v2
-      - working-directory: ..
-        run: git clone https://github.com/o-p-a/EmulationStation.git
+      - run: git clone https://github.com/o-p-a/EmulationStation.git ${{github.workspace}}
 
       - uses: microsoft/setup-msbuild@v1.0.2
 
       - name: setup directories
+        working-directory: ${{runner.workspace}}
         run: |
              mkdir build
              mkdir nuget
 
-      - working-directory: nuget
+      - working-directory: ${{runner.workspace}}/nuget
         run: nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
 
       - run: vcpkg install curl:x86-windows-static-md
@@ -38,8 +38,12 @@ jobs:
       - run: vcpkg install rapidjson:x86-windows-static-md
       - run: vcpkg install sdl2:x86-windows-static-md
 
+      - run: tree /f /a ${{runner.workspace}}
+      - run: tree /f /a c:/vcpkg/installed
+
       - name: cmake
-        run: cmake .
+        working-directory: ${{runner.workspace}}
+        run: cmake ${{github.workspace}}
                -B build
                -A %Platform%
                -DRAPIDJSON_INCLUDE_DIRS=%VCPKG%/include
@@ -52,7 +56,5 @@ jobs:
                -DVLC_VERSION=3.0.11
                -DCMAKE_EXE_LINKER_FLAGS=/SAFESEH:NO
 
-      - run: cmake --build build --config %BUILD_TYPE%
-
-      - run: tree /f /a
-      - run: tree /f /a c:/vcpkg/installed
+      - working-directory: ${{runner.workspace}}
+        run: cmake --build build --config %BUILD_TYPE%

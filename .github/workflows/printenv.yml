@@ -6,47 +6,47 @@ jobs:
   contexts:
     runs-on: windows-latest
     steps:
-    - name: github
+    - name: Context : github
       shell: bash
       env:
         jsonstr: ${{toJson(github)}}
       run: echo "$jsonstr"
-    - name: env
+    - name: Context : env
       shell: bash
       env:
         jsonstr: ${{toJson(env)}}
       run: echo "$jsonstr"
-    - name: job
+    - name: Context : job
       shell: bash
       env:
         jsonstr: ${{toJson(job)}}
       run: echo "$jsonstr"
-    - name: steps
+    - name: Context : steps
       shell: bash
       env:
         jsonstr: ${{toJson(steps)}}
       run: echo "$jsonstr"
-    - name: runner
+    - name: Context : runner
       shell: bash
       env:
         jsonstr: ${{toJson(runner)}}
       run: echo "$jsonstr"
-    - name: secrets
+    - name: Context : secrets
       shell: bash
       env:
         jsonstr: ${{toJson(secrets)}}
       run: echo "$jsonstr"
-    - name: strategy
+    - name: Context : strategy
       shell: bash
       env:
         jsonstr: ${{toJson(strategy)}}
       run: echo "$jsonstr"
-    - name: matrix
+    - name: Context : matrix
       shell: bash
       env:
         jsonstr: ${{toJson(matrix)}}
       run: echo "$jsonstr"
-    - name: needs
+    - name: Context : needs
       shell: bash
       env:
         jsonstr: ${{toJson(needs)}}
