@@ -1,18 +1,28 @@
 on: [push]
 
 jobs:
-  windows-latest-env:
+  contexts:
+    runs-on: windows-latest
+    # env:
+    #   context-github: ${{toJson(github)}}
+    #   context-env: ${{toJson(env)}}
+    #   job
+    #   steps
+    #   runner
+    #   secrets
+    #   strategy
+    #   matrix
+    #   needs
+    steps:
+    - name: context/github
+      shell: bash
+      env:
+        jsonstr: ${{toJson(github)}}
+      run: echo "$jsonstr"
+
+  windows-latest:
     runs-on: windows-latest
     steps:
     - name: printenv
       shell: cmd
       run: set
-
-  context-github:
-    runs-on: windows-latest
-    env:
-      context-github: ${{toJson(github)}}
-    steps:
-    - name: context/github
-      shell: bash
-      run: echo "$context-github"
