@@ -38,14 +38,6 @@ jobs:
 
       - uses: microsoft/setup-msbuild@v1.0.2
 
-      - working-directory: ${{runner.workspace}}
-        run:
-          7z a emulationstation-source.zip ${{github.workspace}}
-
-      - uses: actions/upload-artifact@v2
-        with:
-          path: ${{runner.workspace}}/emulationstation-source.zip
-
       - working-directory: ${{runner.workspace}}/nuget
         run: |
           nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
@@ -82,4 +74,21 @@ jobs:
       - working-directory: ${{runner.workspace}}
         run: cmake --build build --config %BUILD_TYPE%
 
+      - working-directory: ${{github.workspace}}/Release
+        run: |
+          copy /y "%NUGET%/VideoLAN.LibVLC.Windows/build/x86/libvlc.dll" .
+          copy /y "%NUGET%/VideoLAN.LibVLC.Windows/build/x86/libvlccore.dll" .
+          xcopy /E /I ${{runner.workspace}}/resources resources
+          7z a EmulationStation.zip emulationstation.exe *.dll resources
+
       - run: tree /f /a ${{github.workspace}}/Release
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: EmulationStation
+          path: |
+              ${{github.workspace}}/Release/EmulationStation.zip
+              ${{github.workspace}}/Release/emulationstation.exe
+              ${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlc.dll
+              ${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlccore.dll
+              ${{runner.workspace}}/resources/
