@@ -18,8 +18,8 @@ jobs:
     steps:
       - name: setenv
         run: |
-          echo NUGET=${{runner.workspace}}/nuget >> %GITHUB_ENV%
-          echo VCPKG=%VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md >> %GITHUB_ENV%
+          echo NUGET=${{runner.workspace}}/nuget>>%GITHUB_ENV%
+          echo VCPKG=%VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md>>%GITHUB_ENV%
 
       - name: printenv
         run: set
