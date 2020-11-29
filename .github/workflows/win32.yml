@@ -11,7 +11,7 @@ jobs:
       BUILD_TYPE: Release
       Platform: Win32
       NUGET: ${{runner.workspace}}/nuget
-      VCPKG: %VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md
+      VCPKG: "%VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md"
 
     defaults:
       run:
