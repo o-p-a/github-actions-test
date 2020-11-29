@@ -33,10 +33,19 @@ jobs:
           mkdir build
           mkdir nuget
 
-#      - uses: actions/checkout@v2
+      # - uses: actions/checkout@v2
       - run: git clone --recursive https://github.com/o-p-a/EmulationStation.git ${{github.workspace}}
 
       - uses: microsoft/setup-msbuild@v1.0.2
+
+      - working-directory: ${{runner.workspace}}
+        run:
+          7z a emulationstation-source.zip ${{github.workspace}}
+
+      - working-directory: ${{runner.workspace}}
+        uses: actions/upload-artifact@v2
+        with:
+          path: emulationstation-source.zip
 
       - working-directory: ${{runner.workspace}}/nuget
         run: |
@@ -53,8 +62,8 @@ jobs:
       - run: vcpkg install rapidjson:x86-windows-static-md
       - run: vcpkg install sdl2:x86-windows-static-md
 
-      - run: tree /f /a ${{runner.workspace}}
-      - run: tree /f /a c:/vcpkg/installed
+      # - run: tree /f /a ${{runner.workspace}}
+      # - run: tree /f /a c:/vcpkg/installed
 
       - name: Run cmake
         working-directory: ${{runner.workspace}}
