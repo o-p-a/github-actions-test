@@ -24,9 +24,6 @@ jobs:
           echo FREETYPE_DIR=%VCPKG%>>%GITHUB_ENV%
           echo FREEIMAGE_HOME=%VCPKG%>>%GITHUB_ENV%
 
-      - name: printenv
-        run: set
-
       - name: setup directories
         working-directory: ${{runner.workspace}}
         run: |
@@ -53,9 +50,6 @@ jobs:
       - run: vcpkg install rapidjson:x86-windows-static-md
       - run: vcpkg install sdl2:x86-windows-static-md
 
-      # - run: tree /f /a ${{runner.workspace}}
-      # - run: tree /f /a c:/vcpkg/installed
-
       - name: Run cmake
         working-directory: ${{runner.workspace}}
         run: cmake ${{github.workspace}}
@@ -76,19 +70,13 @@ jobs:
 
       - working-directory: ${{github.workspace}}/Release
         run: |
-          copy /y "%NUGET%/VideoLAN.LibVLC.Windows/build/x86/libvlc.dll" .
-          copy /y "%NUGET%/VideoLAN.LibVLC.Windows/build/x86/libvlccore.dll" .
-          xcopy /E /I ${{runner.workspace}}/resources resources
-          7z a EmulationStation.zip emulationstation.exe *.dll resources
+          copy /y ${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlc.dll .
+          copy /y ${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlccore.dll .
+          xcopy /E /I ${{github.workspace}}/resources resources
+          7z a ${{runner.workspace}}/EmulationStation.zip emulationstation.exe *.dll resources
 
       - run: tree /f /a ${{github.workspace}}/Release
 
       - uses: actions/upload-artifact@v2
         with:
-          name: EmulationStation
-          path: |
-              ${{github.workspace}}/Release/EmulationStation.zip
-              ${{github.workspace}}/Release/emulationstation.exe
-              ${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlc.dll
-              ${{env.NUGET}}/VideoLAN.LibVLC.Windows/build/x86/libvlccore.dll
-              ${{runner.workspace}}/resources/
+          path: ${{runner.workspace}}/EmulationStation.zip
