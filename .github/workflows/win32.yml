@@ -10,14 +10,20 @@ jobs:
     env:
       BUILD_TYPE: Release
       Platform: Win32
-#      NUGET: ${{runner.workspace}}/nuget
-      VCPKG: "%VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md"
 
     defaults:
       run:
         shell: cmd
 
     steps:
+      - name: setenv
+        run: |
+          echo "NUGET=${{runner.workspace}}/nuget" >> %GITHUB_ENV%
+          echo "VCPKG=%VCPKG_INSTALLATION_ROOT%/installed/x86-windows-static-md" >> %GITHUB_ENV%
+
+      - name: printenv
+        run: set
+
 #      - uses: actions/checkout@v2
       - run: git clone https://github.com/o-p-a/EmulationStation.git ${{github.workspace}}
 
@@ -26,8 +32,8 @@ jobs:
       - name: setup directories
         working-directory: ${{runner.workspace}}
         run: |
-             mkdir build
-             mkdir nuget
+          mkdir build
+          mkdir nuget
 
       - working-directory: ${{runner.workspace}}/nuget
         run: nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
@@ -44,17 +50,17 @@ jobs:
       - name: cmake
         working-directory: ${{runner.workspace}}
         run: cmake ${{github.workspace}}
-               -B build
-               -A %Platform%
-               -DRAPIDJSON_INCLUDE_DIRS=%VCPKG%/include
-               -DCURL_INCLUDE_DIR=%VCPKG%/include
-               -DSDL2_INCLUDE_DIR=%VCPKG%/include/SDL2
-               -DVLC_INCLUDE_DIR=${{runner.workspace}}/nuget/VideoLAN.LibVLC.Windows/build/x86/include
-               -DCURL_LIBRARY=%VCPKG%/lib/*.lib;Wldap32.Lib;Crypt32.Lib;Imm32.Lib;Version.lib;Setupapi.lib
-               -DSDL2_LIBRARY=%VCPKG%/lib/manual-link/SDL2main.lib
-               -DVLC_LIBRARIES=${{runner.workspace}}/nuget/VideoLAN.LibVLC.Windows/build/x86/libvlc*.lib
-               -DVLC_VERSION=3.0.11
-               -DCMAKE_EXE_LINKER_FLAGS=/SAFESEH:NO
+          -B build
+          -A %Platform%
+          -DRAPIDJSON_INCLUDE_DIRS=%VCPKG%/include
+          -DCURL_INCLUDE_DIR=%VCPKG%/include
+          -DSDL2_INCLUDE_DIR=%VCPKG%/include/SDL2
+          -DVLC_INCLUDE_DIR=%NUGET%/VideoLAN.LibVLC.Windows/build/x86/include
+          -DCURL_LIBRARY=%VCPKG%/lib/*.lib;Wldap32.Lib;Crypt32.Lib;Imm32.Lib;Version.lib;Setupapi.lib
+          -DSDL2_LIBRARY=%VCPKG%/lib/manual-link/SDL2main.lib
+          -DVLC_LIBRARIES=%NUGET%/VideoLAN.LibVLC.Windows/build/x86/libvlc*.lib
+          -DVLC_VERSION=3.0.11
+          -DCMAKE_EXE_LINKER_FLAGS=/SAFESEH:NO
 
       - working-directory: ${{runner.workspace}}
         run: cmake --build build --config %BUILD_TYPE%
