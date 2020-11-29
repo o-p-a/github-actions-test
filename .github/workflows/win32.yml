@@ -37,13 +37,11 @@ jobs:
       - run: git clone --recursive https://github.com/o-p-a/EmulationStation.git ${{github.workspace}}
 
       - uses: microsoft/setup-msbuild@v1.0.2
-        # with:
-        #   vs-version: '[14.0,15.0)'
 
       - working-directory: ${{runner.workspace}}/nuget
-        run: nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
         run: |
-          cd /d %NUGET%/VideoLAN.LibVLC.Windows/build/x86/include/vlc
+          nuget install -ExcludeVersion VideoLAN.LibVLC.Windows
+          cd VideoLAN.LibVLC.Windows/build/x86/include/vlc
           copy libvlc_media.h libvlc_media.h.dist
           echo typedef signed int ssize_t;>$ssize_t.h
           copy /y $ssize_t.h + libvlc_media.h.dist libvlc_media.h
