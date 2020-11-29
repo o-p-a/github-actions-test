@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     env:
       context-github: ${{toJson(github)}}
-        steps:
-        - name: context/github
-          shell: bash
-          run: echo "$context-github"
+    steps:
+    - name: context/github
+      shell: bash
+      run: echo "$context-github"
